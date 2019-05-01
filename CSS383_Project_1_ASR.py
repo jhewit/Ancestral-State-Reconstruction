@@ -1,14 +1,27 @@
 from ete3 import Tree
 from ete3 import EvolTree
+import xlrd
 
 class ASRTree:
-    charStateChanges = 0
+    __charStateChanges = 0
+    __numOfTaxa = 0
+
     def __init__(self):
         self.tree = None
 
-    def buildTree(self):
-        tree = None
-        return tree
+    def buildTree(self, tree):
+        self.__downPass(self, tree)
+        self.__upPass(self, tree)
+
+    def getNumOfTaxa(self):
+        return self.__numOfTaxa
+
+    def getCharStateChanges(self):
+        return self.__charStateChanges
+
+    #def __downPass(self, tree):
+
+    #def __upPass(self, tree):
 
 #Map of Taxa to a 1 if anadromous and 0 if non-anadromous.
 anadromy = {'sea_lion': 0, 'seal': 0, 'monkey': 0, 'cat': 1, 'weasel': 1, 'dog': 1, 'raccoon': 0, 'bear': 1}
