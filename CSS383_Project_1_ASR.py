@@ -71,7 +71,17 @@ class ASRTree:
         print("Char State Changes:", self.__charStateChanges)
 
     def toString(self):
-        return ""
+        if self.__tree == None or self.__charStateChanges == 0:
+            return "\n****************Error****************\nTree not constructed, or maximum parsimony not yet run. Please run methods and try again."
+
+        count = 0
+        asrInfo = "\n\t\tTaxa\n"
+        for key in self.__anadromyLookUp:
+            count += 1
+            asrInfo += str(count) + ": " + self.__anadromyLookUp[key][self.scientificIndex]
+            asrInfo += " (" + self.__anadromyLookUp[key][self.commonIndex] + ")\n"
+        asrInfo += "\nCharacter States Changes: " + str(self.__charStateChanges)
+        return asrInfo
 
     #Private Methods
     def __downPass(self): #Down-pass to assign character state to tips and internal nodes
@@ -126,7 +136,7 @@ print("\n\nWelcome to Anadromy Determinator 1000")
 input("\nPress any key to begin")
 while userInput != -1:
     print("\n\n\tMain Menu")
-    userInput = int(input("\nChoose one of the following options:\n[1] Build Tree\n[2] Import Look-Up File\n[3] Run Maximum Parsimony\n[4] Display Tree\n[0] Exit Program\n\n"))
+    userInput = int(input("\nChoose one of the following options:\n[1] Build Tree\n[2] Import Look-Up File\n[3] Run Maximum Parsimony\n[4] Tree Information\n[5] Display Tree\n[0] Exit Program\n\n"))
     if userInput == 1:
         newASR.buildTree("RAxML_bestTree.result")
     elif userInput == 2:
@@ -135,6 +145,8 @@ while userInput != -1:
     elif userInput == 3:
         newASR.runMaxParsimony()
     elif userInput == 4:
+        print(newASR.toString())
+    elif userInput == 5:
         newASR.showTree()
     elif userInput == 0:
         break
