@@ -1,3 +1,16 @@
+#------------------------CSS383_Project_1_ASR.py--------------------------------
+# Author: Johnathan Hewit
+# Created: 4-28-2019
+# Modified: 5-6-2019
+#-------------------------------------------------------------------------------
+# Purpose: This script is designed to work within the context of a class project
+#          for CSS383 (Bioinformatics) at the University of Washington. It
+#          creates an ancestral state reconstruction for determining when the
+#          aquaporin gene in various anadromous and non-anadromous fish was
+#          evolved in hopes of declaring some significance of the aquaporin
+#          gene and anadromy.
+#-------------------------------------------------------------------------------
+
 from ete3 import Tree
 from ete3 import EvolTree
 import xlrd
@@ -16,8 +29,11 @@ class ASRTree:
     def __init__(self):
         self.__tree = None
 
-    #Public Methods
-    def buildTree(self, path): #Builds newick tree from an aligned and filtered FASTA file
+#Public Methods
+    #-----------------------------buildTree-------------------------------------
+    # Description: Builds newick tree from an aligned and filter FASTA file.
+    #---------------------------------------------------------------------------
+    def buildTree(self, path):
         raxFile = open(path, "r")
         if raxFile.mode == "r":
             contents = raxFile.read()
@@ -25,7 +41,12 @@ class ASRTree:
             print("\nRAxML tree imported successully.")
         else:
             print("\nRAxML tree failed to import successfully. Please check the file path and try again.")
+    #end buildTree
 
+    #-----------------------runMaxParsimony-------------------------------------
+    # Description: Calls private functions for Fitch's algorithm of maximum
+    #              parsimony.
+    #---------------------------------------------------------------------------
     def runMaxParsimony(self): #Calls private functions for Fitch's algorithm of maximum parsimony
         if self.__tree is None:
             print("\n****************Error****************\nTree has not been imported. Please run buildTree method first.")
@@ -34,13 +55,26 @@ class ASRTree:
             self.__downPass()
             self.__upPass()
             self.__findCharStateChanges()
+    #end runMaxParsimony
 
+    #-----------------------------getNumOfTaxa----------------------------------
+    # Description: Returns number of taxa.
+    #---------------------------------------------------------------------------
     def getNumOfTaxa(self): #Returns the number of taxa
         return self.__numOfTaxa
+    #end getNumOfTaxa
 
+    #--------------------------getCharStateChanges------------------------------
+    # Description: Returns number of character state changes.
+    #---------------------------------------------------------------------------
     def getCharStateChanges(self): #Returns the number of character state changes
         return self.__charStateChanges
+    #end of getCharStateChanges
 
+    #---------------------------importLookUp------------------------------------
+    # Description: Imports the look-up file for assigning character state
+    #              changes and taxa names.
+    #---------------------------------------------------------------------------
     def importLookUp(self, path): #Imports the look-up file for assigning character state changes and taxa names
         importFile = xlrd.open_workbook(path)
         file = importFile.sheet_by_index(0)
@@ -64,12 +98,22 @@ class ASRTree:
                     values.clear()
 
         __numOfTaxa = len(self.__anadromyLookUp)
+    #end importLookUp
 
+    #-----------------------------showTree--------------------------------------
+    # Description: Displays tree in console and opens an external window to
+    #              interact with tree and see branch length.
+    #---------------------------------------------------------------------------
     def showTree(self):
         print(self.__tree.get_ascii(attributes=["name", "anadromy"], show_internal=True))
         self.__tree.show()
         print("Char State Changes:", self.__charStateChanges)
+    #end showTree
 
+    #-----------------------------toString--------------------------------------
+    # Description: Prints to console number of taxa and their names, as well as
+    #              the number of character state changes.
+    #---------------------------------------------------------------------------
     def toString(self):
         if self.__tree == None or self.__charStateChanges == 0:
             return "\n****************Error****************\nTree not constructed, or maximum parsimony not yet run. Please run methods and try again."
@@ -82,9 +126,14 @@ class ASRTree:
             asrInfo += " (" + self.__anadromyLookUp[key][self.commonIndex] + ")\n"
         asrInfo += "\nCharacter States Changes: " + str(self.__charStateChanges)
         return asrInfo
+    #end toString
 
-    #Private Methods
-    def __downPass(self): #Down-pass to assign character state to tips and internal nodes
+#Private Methods
+    #----------------------------__downPass-------------------------------------
+    # Description: Private method to perform down-pass to assign character state
+    #              to tips and internal nodes.
+    #---------------------------------------------------------------------------
+    def __downPass(self):
         for node in self.__tree.traverse("postorder"):
             #Check for internal nodes that have been visted - marked as "Ancestor"
             if node.name is "Ancestor":
@@ -113,14 +162,25 @@ class ASRTree:
                     else:
                         node.up.add_feature("anadromy", node.up.anadromy.union(node.anadromy))
                 node.name = self.__anadromyLookUp[node.name][self.commonIndex]
+    #end __downPass
 
+    #-----------------------------__upPass--------------------------------------
+    # Description: Private method to perform up-pass to clear any union in
+    #              ancestor nodes by sinding the intersection of the
+    #              ancestor and its parent node.
+    #---------------------------------------------------------------------------
     def __upPass(self): #Up-pass to clear any union in ancestor nodes
         for node in self.__tree.traverse("preorder"):
             if node.name is "Ancestor":
                 if not node.is_root():
                     if len(node.anadromy) > 1:
                         node.add_feature("anadromy", node.anadromy.intersection(node.up.anadromy))
+    #end __upPass
 
+    #----------------------__findCharStateChanges-------------------------------
+    # Description: Private function to find the number of character states
+    #              changes in the tree.
+    #---------------------------------------------------------------------------
     def __findCharStateChanges(self):
         characterState = 0
         for node in self.__tree.traverse("preorder"):
@@ -129,11 +189,18 @@ class ASRTree:
             else:
                 if not (characterState in node.anadromy):
                     self.__charStateChanges += 1
-#Main - Driver for ASRTree
+    #end __findCharStateChanges
+
+#end ASRTree
+
+ #--------------------------------main------------------------------------------
+ # Description: The main/driver file to support the ASRTree. Interacts with user
+ #              to import files, create the ASR, and display the result.
+ #------------------------------------------------------------------------------
 newASR = ASRTree()
 userInput = 69
 print("\n\nWelcome to Anadromy Determinator 1000")
-input("\nPress any key to begin")
+input("\nPress Enter/Return to begin")
 while userInput != -1:
     print("\n\n\tMain Menu")
     userInput = int(input("\nChoose one of the following options:\n[1] Build Tree\n[2] Import Look-Up File\n[3] Run Maximum Parsimony\n[4] Tree Information\n[5] Display Tree\n[0] Exit Program\n\n"))
@@ -154,3 +221,4 @@ while userInput != -1:
         print("\nInvalid Entry. Please try again.")
 
 print("\n\nThank you for using Anadromy Determinator 1000\n\n")
+#end main
