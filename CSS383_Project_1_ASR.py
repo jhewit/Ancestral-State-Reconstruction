@@ -140,7 +140,7 @@ while userInput != -1:
     if userInput == 1:
         newASR.buildTree("RAxML_bestTree.result")
     elif userInput == 2:
-        path = ("C:/Users/johna/Google Drive/School/UW Bothell/CSS 383/Bioinformatics Team/Project 1/Python Resources/fish_anadromy.xlsx")
+        path = input("\nPlease input the file path for the look-up file, fish_anadromy.xlsx: ")
         newASR.importLookUp(path)
     elif userInput == 3:
         newASR.runMaxParsimony()
