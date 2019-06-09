@@ -107,7 +107,6 @@ class ASRTree:
     def showTree(self):
         print(self.__tree.get_ascii(attributes=["name", "anadromy"], show_internal=True))
         self.__tree.show()
-        print("Char State Changes:", self.__charStateChanges)
     #end showTree
 
     #-----------------------------toString--------------------------------------
@@ -124,7 +123,7 @@ class ASRTree:
             count += 1
             asrInfo += str(count) + ": " + self.__anadromyLookUp[key][self.scientificIndex]
             asrInfo += " (" + self.__anadromyLookUp[key][self.commonIndex] + ")\n"
-        asrInfo += "\nCharacter States Changes: " + str(self.__charStateChanges)
+        asrInfo += "\nCharacter State Changes: " + str(self.__charStateChanges)
         return asrInfo
     #end toString
 
@@ -205,9 +204,10 @@ while userInput != -1:
     print("\n\n\tMain Menu")
     userInput = int(input("\nChoose one of the following options:\n[1] Build Tree\n[2] Import Look-Up File\n[3] Run Maximum Parsimony\n[4] Tree Information\n[5] Display Tree\n[0] Exit Program\n\n"))
     if userInput == 1:
-        newASR.buildTree("RAxML_bestTree.result")
+        newASR.buildTree("RAxML_bestTree(1).result")
     elif userInput == 2:
-        path = input("\nPlease input the file path for the look-up file, fish_anadromy.xlsx: ")
+        #path = input("\nPlease input the file path for the look-up file, fish_anadromy.xlsx: ")
+        path = "C:/Users/johna/Documents/GitHub/Ancestral-State-Reconstruction/fish_file(1).xlsx"
         newASR.importLookUp(path)
     elif userInput == 3:
         newASR.runMaxParsimony()
