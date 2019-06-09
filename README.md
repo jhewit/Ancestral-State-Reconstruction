@@ -14,9 +14,12 @@ To use the program, you'll need the Python packages listed below:
 
 To build from Source:
 1. Ensure the following files are downloaded and in the same directory:
-    \n\ta) CSS383_Project_1_ASR.py
-    \n\tb) fish_anadromy.xlsx
-    \n\tc) RAxML_bestTree.result
+
+    a) CSS383_Project_1_ASR.py
+
+    b) fish_anadromy.xlsx
+    
+    c) RAxML_bestTree.result
 
 2. Open CommandLine/PowerShell, Terminal or Linux Terminal
 
@@ -35,12 +38,17 @@ for Project 2. Press Enter/Return.
 7. Press 3 and Enter/Return to execute the maximum parsimony algorithm.
 
 8. Now you can view the results of the ancestral state reconstruction by either:
-    \n\ta) Pressing 4 and Enter/Return to get general information about the result in text form.
+
+    a) Pressing 4 and Enter/Return to get general information about the result in text form.
        This will tell you the taxa being used, and the number of character state changes.
-    \n\tb) Pressing 5 and Enter/Return to see a visualization of the tree in the terminal window,
+
+    b) Pressing 5 and Enter/Return to see a visualization of the tree in the terminal window,
        and another visualization that displays the tree and its branch lengths.
 
 9. If you're interested in running the hypothesis test via the Markov Chain Monte Carlo method:
-    \n\ta) Press 6 and Enter/Return to run the default number of Monte Carlo simulations (1000).
-    \n\tb) Press 7 and Enter/Return to view the histogram produced by the results of the simulations.
-    \n\tc) Press 8 and Enter/Return to view the P-Value of the hypothesis test.
+
+    a) Press 6 and Enter/Return to run the default number of Monte Carlo simulations (1000).
+
+    b) Press 7 and Enter/Return to view the histogram produced by the results of the simulations.
+
+    c) Press 8 and Enter/Return to view the P-Value of the hypothesis test.
