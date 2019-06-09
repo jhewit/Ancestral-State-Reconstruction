@@ -15,10 +15,8 @@ To use the program, you'll need the Python packages listed below:
 To build from Source:
 1. Ensure the following files are downloaded and in the same directory:
 
-    a) CSS383_Project_1_ASR.py
-
-    b) fish_anadromy.xlsx
-    
+    a) CSS383_Project_1_ASR.py<br/>
+    b) fish_anadromy.xlsx<br/>
     c) RAxML_bestTree.result
 
 2. Open CommandLine/PowerShell, Terminal or Linux Terminal
@@ -40,15 +38,12 @@ for Project 2. Press Enter/Return.
 8. Now you can view the results of the ancestral state reconstruction by either:
 
     a) Pressing 4 and Enter/Return to get general information about the result in text form.
-       This will tell you the taxa being used, and the number of character state changes.
-
+       This will tell you the taxa being used, and the number of character state changes.<br/>
     b) Pressing 5 and Enter/Return to see a visualization of the tree in the terminal window,
        and another visualization that displays the tree and its branch lengths.
 
 9. If you're interested in running the hypothesis test via the Markov Chain Monte Carlo method:
 
-    a) Press 6 and Enter/Return to run the default number of Monte Carlo simulations (1000).
-
-    b) Press 7 and Enter/Return to view the histogram produced by the results of the simulations.
-
+    a) Press 6 and Enter/Return to run the default number of Monte Carlo simulations (1000).<br/>
+    b) Press 7 and Enter/Return to view the histogram produced by the results of the simulations.<br/>
     c) Press 8 and Enter/Return to view the P-Value of the hypothesis test.
